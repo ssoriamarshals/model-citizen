@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Интерактивная Комната</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5dc;
+        }
+
+        .room {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background: url('room.jpg') no-repeat center center/cover;
+        }
+
+        .interactive {
+            position: absolute;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .interactive:hover {
+            border: 2px solid rgba(255, 255, 255, 0.8);
+        }
+
+        /* Элементы комнаты */
+        .poster {
+            top: 20%;
+            left: 85%;
+            width: 120px;
+            height: 180px;
+        }
+
+        .newspaper {
+            top: 80%;
+            left: 25%;
+            width: 150px;
+            height: 100px;
+        }
+
+        .tv {
+            top: 15%;
+            left: 60%;
+            width: 150px;
+            height: 100px;
+        }
+
+        .radio {
+            top: 70%;
+            left: 80%;
+            width: 100px;
+            height: 50px;
+        }
+
+        /* Попап */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .popup-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .popup-content img,
+        .popup-content video,
+        .popup-content audio {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="room">
+        <!-- Постер -->
+        <div class="interactive poster" onclick="openPopup('poster.jpg')"></div>
+
+        <!-- Газета -->
+        <div class="interactive newspaper" onclick="openPopup('newspaper.jpg')"></div>
+
+        <!-- Телевизор -->
+        <div class="interactive tv" onclick="openVideo('https://www.youtube.com/embed/dQw4w9WgXcQ')"></div>
+
+        <!-- Радио -->
+        <div class="interactive radio" onclick="openAudio('audio.mp3')"></div>
+    </div>
+
+    <!-- Попап -->
+    <div id="popup" class="popup">
+        <div class="popup-content" id="popup-content"></div>
+        <span class="close" onclick="closePopup()">×</span>
+    </div>
+
+    <script>
+        function openPopup(content) {
+            const popup = document.getElementById('popup');
+            const popupContent = document.getElementById('popup-content');
+            popupContent.innerHTML = `<img src="${content}" alt="Content">`;
+            popup.style.display = 'flex';
+        }
+
+        function openVideo(videoUrl) {
+            const popup = document.getElementById('popup');
+            const popupContent = document.getElementById('popup-content');
+            popupContent.innerHTML = `<iframe src="${videoUrl}" frameborder="0" allowfullscreen style="width: 100%; height: 60vh;"></iframe>`;
+            popup.style.display = 'flex';
+        }
+
+        function openAudio(audioUrl) {
+            const popup = document.getElementById('popup');
+            const popupContent = document.getElementById('popup-content');
+            popupContent.innerHTML = `<audio controls autoplay><source src="${audioUrl}" type="audio/mpeg">Ваш браузер не поддерживает аудиоплеер.</audio>`;
+            popup.style.display = 'flex';
+        }
+
+        function closePopup() {
+            const popup = document.getElementById('popup');
+            const popupContent = document.getElementById('popup-content');
+            popupContent.innerHTML = '';
+            popup.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
